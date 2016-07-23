@@ -108,7 +108,7 @@
                    "/" (string-join (drop post-parts 3) "-"))))
 
 (site #:title "OrangeShark"
-      #:domain "localhost:8080"
+      #:domain "http://www.erikedrosa.com"
       #:default-metadata
       '((author . "Erik Edrosa")
         (email . "erik.edrosa@gmail.com")
