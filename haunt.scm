@@ -3,6 +3,7 @@
              (haunt builder atom)
              (haunt builder assets)
              (haunt reader)
+             (haunt reader commonmark)
              (haunt site)
              (haunt post)
              (commonmark)
@@ -87,17 +88,11 @@
                         (a (@ (href ,(post-uri post))) ,(post-ref post 'title)))
                     (p (@ (class "post-meta")) ,(date->string* (post-date post))
                        " - " ,@(post-tags (post-ref post 'tags)))
-                    ,@(take-while (lambda (elem) (eq? 'p (car elem))) (post-sxml post))
+                    ,@(if (pair? (car (post-sxml post)))
+                          (take-while (lambda (elem) (eq? 'p (car elem))) (post-sxml post))
+                          (list (post-sxml post)))
                     (p (a (@ (href ,(post-uri post))) "Read More"))))
                 posts))))
-
-(define commonmark-reader
-  (make-reader (make-file-extension-matcher "md")
-               (lambda (file)
-                 (call-with-input-file file
-                   (lambda (port)
-                     (values (read-metadata-headers port)
-                             (commonmark->sxml port)))))))
 
 (define (date-post-slug post)
   (define (file-base str)
@@ -112,7 +107,7 @@
       #:default-metadata
       '((author . "Erik Edrosa")
         (email . "erik.edrosa@gmail.com")
-        (footer . "© Erik Edrosa 2014-2016 All Rights Reserved"))
+        (footer . "© Erik Edrosa 2014-2017 All Rights Reserved"))
       #:make-slug date-post-slug
       #:readers (list commonmark-reader)
       #:builders (list (blog #:theme my-theme)
