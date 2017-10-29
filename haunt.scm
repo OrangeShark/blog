@@ -15,6 +15,11 @@
   `(link (@ (rel "stylesheet")
             (href ,(string-append "/css/" name ".css")))))
 
+(define (menu-item href content)
+  `(li (@ (class "pure-menu-item"))
+       (a (@ (href ,href) (class "pure-menu-link"))
+          ,content)))
+
 (define (link href content)
   `(a (@ (href ,href)) ,content))
 
@@ -57,10 +62,12 @@
                (div (@ (id "layout") (class "pure-g"))
                     (div (@ (id "menu") (class "pure-u-1"))
                          (div (@ (class "home-menu pure-menu pure-menu-open pure-menu-horizontal"))
-                              (a (@ (href "/") (class "pure-menu-heading")) ,(site-title site))
-                              (ul (li ,(link "/index.html" "Blog"))
-                                  (li ,(link "/projects.html" "Projects"))
-                                  (li ,(link "/about.html" "About")))))
+                              (a (@ (href "/") (class "pure-menu-heading pure-menu-link"))
+                                 ,(site-title site))
+                              (ul (@ (class "pure-menu-list"))
+                                  ,(menu-item "/index.html" "Blog")
+                                  ,(menu-item "/projects.html" "Projects")
+                                  ,(menu-item "/about.html" "About"))))
                     (div (@ (class "pure-u-1 pure-u-md-3-4"))
                          (div (@ (class "content"))
                               ,body))
