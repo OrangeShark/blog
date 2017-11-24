@@ -339,13 +339,13 @@ like 2.0 or 2.2. You can add these variables to your `.profile` or
 
 ```bash
 export GUILE_LOAD_PATH="/usr/local/share/guile/site/2.2${GUILE_LOAD_PATH:+:}$GUILE_LOAD_PATH"
-export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/2.2/site-cacche${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_COMPILED_LOAD_PATH"
+export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/2.2/site-ccache${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_COMPILED_LOAD_PATH"
 ```
 
 The alternative is to install your project in the current load path of
 your GNU Guile installation which is often `/usr`. You can easily do
 this by changing the `prefix` variable in the configure script like
-`./configure prefix=/usr`. Now when you run `make install` it will
+`./configure --prefix=/usr`. Now when you run `make install` it will
 install everything in `/usr` instead of `/usr/local`. With the GNU
 Build System, you have full control of where you install your Guile
 files so you have the possibility of installing it anywhere you want
