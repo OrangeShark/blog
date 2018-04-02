@@ -1,6 +1,5 @@
 (use-modules (haunt asset)
              (haunt builder blog)
-             (haunt builder atom)
              (haunt builder assets)
              (haunt html)
              (haunt page)
@@ -9,6 +8,7 @@
              (haunt site)
              (haunt post)
              (commonmark)
+             (feed atom)
              (srfi srfi-1))
 
 (define (stylesheet name)
@@ -67,6 +67,7 @@
                               (ul (@ (class "pure-menu-list"))
                                   ,(menu-item "/index.html" "Blog")
                                   ,(menu-item "/projects.html" "Projects")
+                                  ,(menu-item "/guile/" "Guile")
                                   ,(menu-item "/about.html" "About"))))
                     (div (@ (class "pure-u-1 pure-u-md-3-4"))
                          (div (@ (class "content"))
@@ -140,6 +141,16 @@ Here are some select software projects.
 
 - [guile-commonmark](https://github.com/OrangeShark/guile-commonmark) Implementation of CommonMark in GNU Guile Scheme."))
 
+(define guile-page
+  (markdown-page
+   "Guile" "guile/index.html"
+   "# GNU Guile
+
+Here are some useful resources for [GNU Guile](https://gnu.org/s/guile).
+
+- [Guile project list](http://sph.mn/c/view/g2)
+- [With Guise and Guile](http://www.draketo.de/proj/with-guise-and-guile/)"))
+
 (define footer-license
   '("© Erik Edrosa 2014-2017 "
     (a (@ (rel "license") (href "http://creativecommons.org/licenses/by-sa/4.0/"))
@@ -161,6 +172,7 @@ Here are some select software projects.
       #:builders (list (blog #:theme my-theme)
                        about-page
                        project-page
+                       guile-page
                        (atom-feed)
                        (static-directory "imgs")
                        (static-directory "css")))
